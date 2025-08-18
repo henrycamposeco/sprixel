@@ -3,31 +3,18 @@
 Pixel-art video tooling in your browser. Convert clips into pixelated frames and export them as WebM, GIF, APNG, or individual PNGs. Build sprite sheets and detect keyframes — all client‑side, without servers.
 
 
-Original:
+### Original:
 
-<img src="./public/original.png" alt="drawing" width="200"/>
+https://github.com/user-attachments/assets/449da638-86c3-4aba-a493-c9f437035cc0
 
-Processed:
+### Processed:
 
-<video controls>
-  <source src="/public/rendered.webm" type="video/webm">
-  Your browser does not support the video tag.
-</video>
+[rendered.webm](https://github.com/user-attachments/assets/7a91add2-7726-4f7c-8165-011492f27539)
 
-<video controls>
-  <source src="./public/rendered.webm" type="video/webm">
-  Your browser does not support the video tag.
-</video>
+[rendered2.webm](https://github.com/user-attachments/assets/02c54ead-b7e7-4cac-8481-1aab7b156a15)
 
-<video controls>
-  <source src="./public/rendered2.webm" type="video/webm">
-  Your browser does not support the video tag.
-</video>
+[rendered3.webm](https://github.com/user-attachments/assets/ad7e41b2-37fd-4f31-8c5c-f55d3e2485b3)
 
-<video controls>
-  <source src="./public/rendered3.webm" type="video/webm">
-  Your browser does not support the video tag.
-</video>
 
 ## Overview
 
