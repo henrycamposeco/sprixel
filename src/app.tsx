@@ -1,43 +1,26 @@
-import { useState } from 'preact/hooks'
-import preactLogo from './assets/preact.svg'
-import viteLogo from '/vite.svg'
-import './app.css'
+import { signal } from '@preact/signals';
+import { PixelizeTab } from './app/tabs/PixelizeTab'
+import { KeyframesTab } from './app/tabs/KeyframesTab';
+import { SpritesheetTab } from './app/tabs/SpritesheetTab';
 
-export function App() {
-  const [count, setCount] = useState(0)
+const currentTab = signal<'pixelize'|'keyframes'|'spritesheet'>('pixelize');
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} class="logo" alt="Vite logo" />
-        </a>
-        <a href="https://preactjs.com" target="_blank">
-          <img src={preactLogo} class="logo preact" alt="Preact logo" />
-        </a>
-      </div>
-      <h1>Vite + Preact</h1>
-      <div class="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/app.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p>
-        Check out{' '}
-        <a
-          href="https://preactjs.com/guide/v10/getting-started#create-a-vite-powered-preact-app"
-          target="_blank"
-        >
-          create-preact
-        </a>
-        , the official Preact + Vite starter
-      </p>
-      <p class="read-the-docs">
-        Click on the Vite and Preact logos to learn more
-      </p>
-    </>
-  )
+export function App(){
+    return (
+        <div class="layout">
+            <header>
+                <h1 style="margin:0;font-size:16px" class="grow">PixForge</h1>
+                <nav class="tabs">
+                    {['pixelize','keyframes','spritesheet'].map(id=>
+                        <button class={`tab ${currentTab.value===id?'active':''}`} onClick={()=>currentTab.value=id as any}>
+                            {id==='pixelize'?'Pixelizar': id==='keyframes'?'Keyframes → Spritesheet':'Spritesheet' }
+                        </button>
+                    )}
+                </nav>
+            </header>
+            {currentTab.value==='pixelize' && <PixelizeTab/>}
+            {currentTab.value==='keyframes' && <KeyframesTab/>}
+            {currentTab.value==='spritesheet' && <SpritesheetTab/>}
+        </div>
+    );
 }
