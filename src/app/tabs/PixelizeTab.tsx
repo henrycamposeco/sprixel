@@ -17,6 +17,7 @@ import {
 import {PixelizeService} from '../features/pixelize/usePixelizeService';
 import {framesToWebM} from '../lib/export/webm';
 import {framesToGIF} from '../lib/export/gif';
+import {framesToAPNG} from '../lib/export/apng';
 
 const serviceSig = signal<PixelizeService | null>(null);
 
@@ -183,6 +184,15 @@ export function PixelizeTab() {
         downloadBlob(blob, 'pixel-clip.gif');
     };
 
+    const onExportAPNG = async () => {
+        if (!framesRef.current.length) {
+            alert('Process the clip first');
+            return;
+        }
+        const blob = await framesToAPNG(framesRef.current, pxFps.value);
+        downloadBlob(blob, 'pixel-clip.apng');
+    };
+
     const onExportPNGs = async () => {
         if (!framesRef.current.length) {
             alert('Process the clip first');
@@ -264,6 +274,9 @@ export function PixelizeTab() {
                 <div class="row">
                     <button onClick={onExportGIF}>Export GIF</button>
                     <span class="small muted">(uses fixed palette if available)</span></div>
+                <div class="row">
+                    <button onClick={onExportAPNG}>Export APNG</button>
+                </div>
                 <div class="row">
                     <button onClick={onExportPNGs}>Export PNG frames</button>
                 </div>
