@@ -178,9 +178,7 @@ export function PixelizeTab() {
             alert('Process the clip first');
             return;
         }
-        const pal = PALETTES[pxPalette.value];
-        const fixed = pal?.type === 'fixed' ? pal : undefined;
-        const blob = await framesToGIF(framesRef.current, pxFps.value, fixed as any);
+        const blob = await framesToGIF(framesRef.current, pxFps.value);
         downloadBlob(blob, 'pixel-clip.gif');
     };
 
@@ -248,8 +246,10 @@ export function PixelizeTab() {
                 <div class="row"><label>FPS</label><input type="number" step="1" value={pxFps.value}
                                                           onInput={e => pxFps.value = parseInt((e.currentTarget as HTMLInputElement).value || '15')}/>
                 </div>
-                <div class="row"><label>Target Height</label><input type="number" step="2" value={pxTargetH.value}
-                                                                    onInput={e => pxTargetH.value = parseInt((e.currentTarget as HTMLInputElement).value || '120')}/>
+                <div class="row"><label>Pixel Resolution ({pxTargetH.value})</label><input type="range" min="20"
+                                                                                           max="255" step="5"
+                                                                                           value={pxTargetH.value}
+                                                                                           onInput={e => pxTargetH.value = parseInt((e.currentTarget as HTMLInputElement).value || '90')}/>
                 </div>
                 <div class="row"><label>Palette</label><select value={pxPalette.value}
                                                                onInput={e => pxPalette.value = (e.currentTarget as HTMLSelectElement).value}>
@@ -261,9 +261,10 @@ export function PixelizeTab() {
                     <option value="ordered">Ordered</option>
                     <option value="error">Error Diffusion</option>
                 </select></div>
-                <div class="row"><label>Intensity</label><input type="range" min="0" max="1" step="0.05"
-                                                                value={pxDitherIntensity.value}
-                                                                onInput={e => pxDitherIntensity.value = parseFloat((e.currentTarget as HTMLInputElement).value)}/>
+                <div class="row"><label>Intensity ({pxDitherIntensity.value})</label><input type="range" min="0" max="1"
+                                                                                            step="0.05"
+                                                                                            value={pxDitherIntensity.value}
+                                                                                            onInput={e => pxDitherIntensity.value = parseFloat((e.currentTarget as HTMLInputElement).value)}/>
                 </div>
                 <div class="row">
                     <button onClick={onProcess}>Process</button>

@@ -95,7 +95,7 @@ export function KeyframesTab() {
             sctx.drawImage(v, 0, 0, sc.width, sc.height);
             bitmaps.push(await createImageBitmap(sc));
         }
-        const targetH = 120;
+        const targetH = 90;
         const frames = await Promise.all(bitmaps.map(async bmp => resizeBitmap(bmp, Math.floor(bmp.width * (targetH / bmp.height)), targetH)));
         const {canvas, atlas} = buildSimpleGridAtlas(frames, {
             frameW: frames[0].width,

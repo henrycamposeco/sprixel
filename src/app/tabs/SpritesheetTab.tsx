@@ -1,6 +1,7 @@
 import {useRef} from 'preact/hooks';
 import {ssCols, ssExtrude, ssFps, ssImages, ssPadding, ssStatus} from '../features/spritesheet/signals';
 import {buildSimpleGridAtlas} from '../lib/export/atlas';
+import {framesToGIF} from '../lib/export/gif';
 
 export function SpritesheetTab() {
     const prevRef = useRef<HTMLCanvasElement>(null);
@@ -46,6 +47,16 @@ export function SpritesheetTab() {
         downloadBlob(new Blob([JSON.stringify(atlas, null, 2)], {type: 'application/json'}), 'spritesheet.json');
     };
 
+    const onExportGIF = async () => {
+        if (!ssImages.value.length) {
+            alert('Importa imágenes');
+            return;
+        }
+        // Export frames as an animated GIF using current FPS
+        const blob = await framesToGIF(ssImages.value, ssFps.value);
+        downloadBlob(blob, 'pixForge.gif');
+    };
+
     return (
         <div class="content">
             <aside>
@@ -66,6 +77,9 @@ export function SpritesheetTab() {
                 </div>
                 <div class="row">
                     <button onClick={onBuild}>Construir + Exportar</button>
+                </div>
+                <div class="row">
+                    <button onClick={onExportGIF}>Exportar GIF animado</button>
                 </div>
                 <div class="row small">{ssStatus}</div>
             </aside>

@@ -1,10 +1,10 @@
 import {quantizeByPalette} from '../lib/palettes';
 import {BAYER4, clamp8} from '../lib/dithering';
 
-let paletteId = 'rgb565';
+let paletteId = 'default';
 let dither: 'none' | 'ordered' | 'error' = 'none';
 let intensity = 0.5; // 0..1
-let targetH = 120;
+let targetH = 90;
 
 self.onmessage = async (e: MessageEvent) => {
     const msg = e.data as any;
@@ -12,7 +12,7 @@ self.onmessage = async (e: MessageEvent) => {
         paletteId = msg.cfg.paletteId;
         dither = msg.cfg.dither;
         intensity = msg.cfg.intensity ?? 0.5;
-        targetH = msg.cfg.targetH ?? 120;
+        targetH = msg.cfg.targetH ?? 90;
         return;
     }
     if (msg.op === 'frame') {

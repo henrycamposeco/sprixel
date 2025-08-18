@@ -25,6 +25,26 @@ const Q = {
 };
 
 export const PALETTES: Record<string, Palette> = {
+    default: {
+        id: 'default', label: 'default (64)', type: 'fixed', colors: makeColors([
+            '#050914','#050914','#110524','#110524','#3B063A','#3B063A','#691749','#691749',
+            '#9C3247','#9C3247','#D46453','#D46453','#F5A15D','#F5A15D','#FFCF8E','#FFCF8E',
+            '#FF7A7D','#FF7A7D','#FF417D','#FF417D','#D61A88','#D61A88','#94007A','#94007A',
+            '#42004E','#42004E','#220029','#220029','#100726','#100726','#25082C','#25082C',
+            '#3D1132','#3D1132','#73263D','#73263D','#BD4035','#BD4035','#ED7B39','#ED7B39',
+            '#FFB84A','#FFB84A','#FFF540','#FFF540','#C6D831','#C6D831','#77B02A','#77B02A',
+            '#429058','#429058','#2C645E','#2C645E','#153C4A','#153C4A','#052137','#052137',
+            '#0E0421','#0E0421','#0C0B42','#0C0B42','#032769','#032769','#144491','#144491',
+            '#488BD4','#488BD4','#78D7FF','#78D7FF','#B0FFF1','#B0FFF1','#FAFFFF','#FAFFFF',
+            '#C7D4E1','#C7D4E1','#928FB8','#928FB8','#5B537D','#5B537D','#392946','#392946',
+            '#24142C','#24142C','#0E0F2C','#0E0F2C','#132243','#132243','#1A466B','#1A466B',
+            '#10908E','#10908E','#28C074','#28C074','#3DFF6E','#3DFF6E','#F8FFB8','#F8FFB8',
+            '#F0C297','#F0C297','#CF968C','#CF968C','#8F5765','#8F5765','#52294B','#52294B',
+            '#0F022E','#0F022E','#35003B','#35003B','#64004C','#64004C','#9B0E3E','#9B0E3E',
+            '#D41E3C','#D41E3C','#ED4C40','#ED4C40','#FF9757','#FF9757','#D4662F','#D4662F',
+            '#9C341A','#9C341A','#691B22','#691B22','#450C28','#450C28','#2D002E'
+        ])
+    },
     rgb565: {id: 'rgb565', label: 'RGB565 (16-bit look)', type: 'formula', quantize: Q.rgb565},
     rgb332: {id: 'rgb332', label: 'RGB332 (8-bit look)', type: 'formula', quantize: Q.rgb332},
     pico8: {
@@ -81,24 +101,94 @@ export const PALETTES: Record<string, Palette> = {
             '#A0B3DE','#A0B3DE','#CBDCF2','#CBDCF2','#D1F8FF'
         ])
     },
-    pastel2: {
-        id: 'pastel2', label: 'Pastel2 (64)', type: 'fixed', colors: makeColors([
-            '#050914','#050914','#110524','#110524','#3B063A','#3B063A','#691749','#691749',
-            '#9C3247','#9C3247','#D46453','#D46453','#F5A15D','#F5A15D','#FFCF8E','#FFCF8E',
-            '#FF7A7D','#FF7A7D','#FF417D','#FF417D','#D61A88','#D61A88','#94007A','#94007A',
-            '#42004E','#42004E','#220029','#220029','#100726','#100726','#25082C','#25082C',
-            '#3D1132','#3D1132','#73263D','#73263D','#BD4035','#BD4035','#ED7B39','#ED7B39',
-            '#FFB84A','#FFB84A','#FFF540','#FFF540','#C6D831','#C6D831','#77B02A','#77B02A',
-            '#429058','#429058','#2C645E','#2C645E','#153C4A','#153C4A','#052137','#052137',
-            '#0E0421','#0E0421','#0C0B42','#0C0B42','#032769','#032769','#144491','#144491',
-            '#488BD4','#488BD4','#78D7FF','#78D7FF','#B0FFF1','#B0FFF1','#FAFFFF','#FAFFFF',
-            '#C7D4E1','#C7D4E1','#928FB8','#928FB8','#5B537D','#5B537D','#392946','#392946',
-            '#24142C','#24142C','#0E0F2C','#0E0F2C','#132243','#132243','#1A466B','#1A466B',
-            '#10908E','#10908E','#28C074','#28C074','#3DFF6E','#3DFF6E','#F8FFB8','#F8FFB8',
-            '#F0C297','#F0C297','#CF968C','#CF968C','#8F5765','#8F5765','#52294B','#52294B',
-            '#0F022E','#0F022E','#35003B','#35003B','#64004C','#64004C','#9B0E3E','#9B0E3E',
-            '#D41E3C','#D41E3C','#ED4C40','#ED4C40','#FF9757','#FF9757','#D4662F','#D4662F',
-            '#9C341A','#9C341A','#691B22','#691B22','#450C28','#450C28','#2D002E'
+    kulepu: {
+        id: 'kulepu', label: 'kulepu (16)', type: 'fixed', colors: makeColors([
+            '#180c10','#3d4249','#798890','#a6cbc4','#43a6c7',
+            '#2d488c','#8f74e8','#e7aac7','#f0f5dc','#f0b886',
+            '#d87f5c','#8b3e34','#f0933b','#f1cc46','#89ab3e',
+            '#306645'
+        ])
+    },
+    gothic: {
+        id: 'gothic',
+        label: 'gothic (14)',
+        type: 'fixed',
+        colors: makeColors([
+            '#ffffff','#d6cdd4','#b4a8b6','#8e8496','#676375',
+            '#494151','#eeeeb4','#dcbf81','#dda082','#d88282',
+            '#c77b51','#7c3b17','#500d06','#000000'
+        ])
+    },
+    apollo: {
+        id: 'apollo',
+        label: 'apollo (40)',
+        type: 'fixed',
+        colors: makeColors([
+            '#172038','#253a5e','#3c5e8b','#4f8fba','#73bed3','#a4dddb',
+            '#19332d','#25562e','#468232','#75a743','#a8ca58','#d0da91',
+            '#4d2b32','#7a4841','#ad7757','#c09473','#d7b594','#e7d5b3',
+            '#341c27','#602c2c','#884b2b','#be772b','#de9e41','#e8c170',
+            '#241527','#411d31','#752438','#a53030','#cf573c','#da863e',
+            '#1e1d39','#402751','#7a367b','#a23e8c','#c65197','#df84a5',
+            '#090a14','#10141f','#151d28','#202e37'
+        ])
+    },
+    palette31: {
+        id: '31',
+        label: '31 (32)',
+        type: 'fixed',
+        colors: makeColors([
+            '#636663','#87857c','#bcad9f','#f2b888','#eb9661','#b55945',
+            '#734c44','#3d3333','#593e47','#7a5859','#a57855','#de9f47',
+            '#fdd179','#fee1b8','#d4c692','#a6b04f','#819447','#44702d',
+            '#2f4d2f','#546756','#89a477','#a4c5af','#cae6d9','#f1f6f0',
+            '#d5d6db','#bbc3d0','#96a9c1','#6c81a1','#405273','#303843',
+            '#14233a'
+        ])
+    },
+    sweetie: {
+        id: 'sweetie',
+        label: 'sweetie (16)',
+        type: 'fixed',
+        colors: makeColors([
+            '#1a1c2c','#5d275d','#b13e53','#ef7d57',
+            '#ffcd75','#a7f070','#38b764','#257179',
+            '#29366f','#3b5dc9','#41a6f6','#73eff7',
+            '#f4f4f4','#94b0c2','#566c86','#333c57'
+        ])
+    },
+    nopal: {
+        id: 'nopal',
+        label: 'nopal (12)',
+        type: 'fixed',
+        colors: makeColors([
+            '#e2e4df','#c5cfc4','#a8b5ae','#92929c',
+            '#ffeced','#fbd4d2','#f1b4b4','#cca3a3',
+            '#f1eab6','#e4dba0','#cac18a','#aba47b'
+        ])
+    },
+    justParchment8: {
+        id: 'justParchment8',
+        label: 'JustParchment8 (8)',
+        type: 'fixed',
+        colors: makeColors([
+            '#292418','#524839','#73654a','#8b7d62',
+            '#a48d6a','#bda583','#cdba94','#e6ceac'
+        ])
+    },
+    monochrome8Accent: {
+        id: 'monochrome8Accent',
+        label: 'monochrome8Accent (8)',
+        type: 'fixed',
+        colors: makeColors([
+            '#1a1a1a', // very dark gray
+            '#404040', // dark gray
+            '#f37d3f', // soft orange accent
+            '#666666', // medium gray
+            '#5ba8b2', // soft cyan accent
+            '#999999', // light gray
+            '#cccccc', // lighter gray
+            '#f2f2f2'  // near white
         ])
     },
 };
