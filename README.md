@@ -2,7 +2,16 @@
 
 Pixel-art video tooling in your browser. Convert clips into pixelated frames and export them as WebM, GIF, APNG, or individual PNGs. Build sprite sheets and detect keyframes — all client‑side, without servers.
 
-![Preview](./public/preview.gif)
+
+Original:
+
+<img src="./public/original.png" alt="drawing" width="200"/>
+
+Processed:
+
+<img src="./public/1.apng" alt="drawing" width="100"/>
+<img src="./public/2.apng" alt="drawing" width="100"/>
+<img src="./public/3.apng" alt="drawing" width="100"/>
 
 ## Overview
 
@@ -13,6 +22,8 @@ Sprixel is a Preact + TypeScript + Vite web app focused on fast, local media wor
 - Detect keyframes (scene changes) from a video and export them as a sprite sheet.
 
 Everything runs locally in the browser. No uploads, no backend.
+![Demo1](./public/sample1.png)
+![Demo2](./public/sample2.png)
 
 ## Features
 
@@ -39,7 +50,7 @@ Everything runs locally in the browser. No uploads, no backend.
   - Sample a video at a fixed rate and detect keyframes based on a threshold.
   - Preview detected times, select which ones to keep.
   - Export selected frames as a sprite sheet (PNG + JSON).
-
+    ![Preview](./public/preview.gif)
 ## Getting started
 
 Prerequisites:
