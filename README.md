@@ -9,9 +9,25 @@ Original:
 
 Processed:
 
-<img src="./public/1.apng" alt="drawing" width="100"/>
-<img src="./public/2.apng" alt="drawing" width="100"/>
-<img src="./public/3.apng" alt="drawing" width="100"/>
+<video controls>
+  <source src="/public/rendered.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
+
+<video controls>
+  <source src="./public/rendered.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
+
+<video controls>
+  <source src="./public/rendered2.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
+
+<video controls>
+  <source src="./public/rendered3.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
 
 ## Overview
 
