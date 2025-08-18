@@ -13,7 +13,7 @@ export function App(){
                 <nav class="tabs">
                     {['pixelize','keyframes','spritesheet'].map(id=>
                         <button class={`tab ${currentTab.value===id?'active':''}`} onClick={()=>currentTab.value=id as any}>
-                            {id==='pixelize'?'Pixelizar': id==='keyframes'?'Keyframes → Spritesheet':'Spritesheet' }
+                            {id==='pixelize'?'Pixelizer': id==='keyframes'?'Keyframes → Spritesheet':'Spritesheet' }
                         </button>
                     )}
                 </nav>

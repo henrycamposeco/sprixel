@@ -286,7 +286,7 @@ export function PixelizeTab() {
             <main>
                 <video ref={videoRef} style="display:none" playsInline muted></video>
                 <div class="row" style="padding:12px">
-                    <label>Preview frame (s)</label>
+                    <label>Preview frame (s){pxVideo.value ? ` (${pxPreviewFrame.value.toFixed(2)})` : ''}</label>
                     <input type="range" min={0} max={pxVideo.value?.duration ?? 0} step={0.05}
                            value={pxPreviewFrame.value}
                            onInput={e => pxPreviewFrame.value = parseFloat((e.currentTarget as HTMLInputElement).value)}/>
