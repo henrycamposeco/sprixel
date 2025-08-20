@@ -1,6 +1,6 @@
 import {useEffect, useRef} from 'preact/hooks';
 import {signal} from '@preact/signals';
-import {PALETTES} from '../lib/palettes';
+import '../../app.css'
 import {
     pxDither,
     pxDitherIntensity,
@@ -18,6 +18,7 @@ import {PixelizeService} from '../features/pixelize/usePixelizeService';
 import {framesToWebM} from '../lib/export/webm';
 import {framesToGIF} from '../lib/export/gif';
 import {framesToAPNG} from '../lib/export/apng';
+import {PALETTES} from "../lib/palettes.ts";
 
 const serviceSig = signal<PixelizeService | null>(null);
 
@@ -109,8 +110,7 @@ export function PixelizeTab() {
 
         const svc = serviceSig.value!;
         svc.post({
-            op: 'config',
-            cfg: {
+            op: 'config', cfg: {
                 paletteId: pxPalette.value,
                 dither: pxDither.value,
                 intensity: pxDitherIntensity.value,
@@ -209,100 +209,140 @@ export function PixelizeTab() {
         }
     };
 
-    return (
-        <div class="content">
-            <aside>
-                <div class="row"><label>Video</label><input type="file" accept="video/*" onChange={e => {
-                    const f = (e.currentTarget as HTMLInputElement).files?.[0];
-                    if (!f) return;
-                    const url = URL.createObjectURL(f);
-                    const v = videoRef.current!;
-                    v.src = url;
-                    v.onloadedmetadata = () => {
-                        // Reset state on a new video load
-                        if (stopPlaybackRef.current) {
-                            stopPlaybackRef.current();
-                            stopPlaybackRef.current = null;
-                        }
-                        framesRef.current = [];
-                        pxProgress.value = 0;
-                        pxStatus.value = `${v.videoWidth}×${v.videoHeight}  dur:${v.duration.toFixed(2)}s`;
+    return (<div className="tab-shell">
 
-                        // Clear canvases
-                        clearCanvas(outputCanvasRef.current);
-                        clearCanvas(previewCanvasRef.current);
-
-                        // Trigger preview update after video metadata is loaded
-                        onPreviewChange().then(() => {
-                        });
-                    };
-                }}/></div>
-                <div class="row"><label>Start</label><input type="number" step="0.1" value={pxStart.value}
-                                                            onInput={e => pxStart.value = parseFloat((e.currentTarget as HTMLInputElement).value || '0')}/>
-                </div>
-                <div class="row"><label>Duration</label><input type="number" step="0.1" value={pxDur.value}
-                                                               onInput={e => pxDur.value = parseFloat((e.currentTarget as HTMLInputElement).value || '10')}/>
-                </div>
-                <div class="row"><label>FPS</label><input type="number" step="1" value={pxFps.value}
-                                                          onInput={e => pxFps.value = parseInt((e.currentTarget as HTMLInputElement).value || '15')}/>
-                </div>
-                <div class="row"><label>Pixel Resolution ({pxTargetH.value})</label><input type="range" min="20"
-                                                                                           max="255" step="5"
-                                                                                           value={pxTargetH.value}
-                                                                                           onInput={e => pxTargetH.value = parseInt((e.currentTarget as HTMLInputElement).value || '90')}/>
-                </div>
-                <div class="row"><label>Palette</label><select value={pxPalette.value}
-                                                               onInput={e => pxPalette.value = (e.currentTarget as HTMLSelectElement).value}>
-                    {Object.values(PALETTES).map(p => <option value={p.id}>{p.label}</option>)}
-                </select></div>
-                <div class="row"><label>Dithering</label><select value={pxDither.value}
-                                                                 onInput={e => pxDither.value = (e.currentTarget as HTMLSelectElement).value as any}>
-                    <option value="none">None</option>
-                    <option value="ordered">Ordered</option>
-                    <option value="error">Error Diffusion</option>
-                </select></div>
-                <div class="row"><label>Intensity ({pxDitherIntensity.value})</label><input type="range" min="0" max="1"
-                                                                                            step="0.05"
-                                                                                            value={pxDitherIntensity.value}
-                                                                                            onInput={e => pxDitherIntensity.value = parseFloat((e.currentTarget as HTMLInputElement).value)}/>
-                </div>
-                <div class="row">
-                    <button onClick={onProcess}>Process</button>
-                </div>
-                <div class="row">
-                    <button onClick={onExportWebM}>Export WebM</button>
-                </div>
-                <div class="row">
-                    <button onClick={onExportGIF}>Export GIF</button>
-                    <span class="small muted">(uses fixed palette if available)</span></div>
-                <div class="row">
-                    <button onClick={onExportAPNG}>Export APNG</button>
-                </div>
-                <div class="row">
-                    <button onClick={onExportPNGs}>Export PNG frames</button>
-                </div>
-                <div class="row small">Progress: {pxProgress} % — {pxStatus}</div>
-            </aside>
-            <main>
-                <video ref={videoRef} style="display:none" playsInline muted></video>
-                <div class="row" style="padding:12px">
-                    <label>Preview frame (s){pxVideo.value ? ` (${pxPreviewFrame.value.toFixed(2)})` : ''}</label>
-                    <input type="range" min={0} max={pxVideo.value?.duration ?? 0} step={0.05}
-                           value={pxPreviewFrame.value}
-                           onInput={e => pxPreviewFrame.value = parseFloat((e.currentTarget as HTMLInputElement).value)}/>
-                </div>
-
-                <div class="row" style="display:flex; gap:12px; flex-wrap:wrap;">
-                    <div style="flex:1 1 300px;">
-                        <div class="small muted" style="padding:4px 0;">Preview</div>
-                        <canvas ref={previewCanvasRef} width={640} height={360}></canvas>
-                    </div>
-                    <div style="flex:1 1 300px;">
-                        <div class="small muted" style="padding:4px 0;">Processed output</div>
-                        <canvas ref={outputCanvasRef} width={640} height={360}></canvas>
+            {/* Actions */}
+            <div className="actions">
+                <div className="container wrap">
+                    <button className="btn" onClick={onProcess}>Process {pxProgress.value === 0 ? '': `${pxProgress}%`}</button>
+                    <div className="right" aria-label="Export">
+                    <label>Export to:</label>
+                        <button className="btn secondary" onClick={onExportWebM}>WebM</button>
+                        <button className="btn secondary" onClick={onExportGIF}>GIF</button>
+                        <button className="btn secondary" onClick={onExportAPNG}>APNG</button>
+                        <button className="btn secondary" onClick={onExportPNGs} disabled>PNG frames</button>
                     </div>
                 </div>
-            </main>
+            </div>
+
+            {/* Layout: tooling + workspace */}
+            <div className="container layout">
+                <aside className="panel tooling" aria-label="Tooling Pixelize">
+                    <h2>Tooling — Pixelize</h2>
+
+                    <div className="field">
+                        <label>Video</label>
+                        <input
+                            type="file"
+                            accept="video/*"
+                            onChange={e => {
+                                const f = (e.currentTarget as HTMLInputElement).files?.[0];
+                                if (!f) return;
+                                const url = URL.createObjectURL(f);
+                                const v = videoRef.current!;
+                                v.src = url;
+                                v.onloadedmetadata = () => {
+                                    // Reset state on a new video load
+                                    if (stopPlaybackRef.current) {
+                                        stopPlaybackRef.current();
+                                        stopPlaybackRef.current = null;
+                                    }
+                                    framesRef.current = [];
+                                    pxProgress.value = 0;
+                                    pxStatus.value = `${v.videoWidth}×${v.videoHeight}  dur:${v.duration.toFixed(2)}s`;
+
+                                    // Clear canvases
+                                    clearCanvas(outputCanvasRef.current);
+                                    clearCanvas(previewCanvasRef.current);
+
+                                    // Trigger preview update after video metadata is loaded
+                                    onPreviewChange().then(() => {
+                                    });
+                                };
+                            }}/>
+                    </div>
+                    <div className="field">
+                        <label htmlFor="Start">Start</label>
+                        <input
+                            type="number" step="0.1" value={pxStart.value}
+                            onInput={e => pxStart.value = parseFloat((e.currentTarget as HTMLInputElement).value || '0')}
+                        />
+                    </div>
+                    <div className="field">
+                        <label htmlFor="Duration">Duration</label>
+                        <input
+                            type="number" step="0.1" value={pxDur.value}
+                            onInput={e => pxDur.value = parseFloat((e.currentTarget as HTMLInputElement).value || '10')}
+                        />
+                    </div>
+                    <div className="field">
+                        <label>FPS</label>
+                        <input type="number" step="1" value={pxFps.value}
+                               onInput={e => pxFps.value = parseInt((e.currentTarget as HTMLInputElement).value || '15')}/>
+                    </div>
+                    <div className="field">
+                        <label>Pixel Resolution ({pxTargetH.value})</label>
+                        <input
+                            type="range" min="20"
+                            max="255" step="5"
+                            value={pxTargetH.value}
+                            onInput={e => pxTargetH.value = parseInt((e.currentTarget as HTMLInputElement).value || '90')}
+                        />
+                    </div>
+                    <div className="field">
+                        <label>Palette</label>
+                        <select
+                            value={pxPalette.value}
+                            onInput={e => pxPalette.value = (e.currentTarget as HTMLSelectElement).value}>
+                            {Object.values(PALETTES).map(p => <option value={p.id}>{p.label}</option>)}
+                        </select>
+                    </div>
+                    <div className="field">
+                        <label>Dithering</label>
+                        <select
+                            value={pxDither.value}
+                            onInput={e => pxDither.value = (e.currentTarget as HTMLSelectElement).value as any}>
+                            <option value="none">None</option>
+                            <option value="ordered">Ordered</option>
+                            <option value="error">Error Diffusion</option>
+                        </select>
+                    </div>
+                    <div className="field">
+                        <label>Intensity ({pxDitherIntensity.value})</label>
+                        <input
+                            type="range"
+                            min="0"
+                            max="1"
+                            step="0.05"
+                            value={pxDitherIntensity.value}
+                            onInput={e => pxDitherIntensity.value = parseFloat((e.currentTarget as HTMLInputElement).value)}/>
+                    </div>
+
+                </aside>
+
+                <section className="panel">
+                    <video ref={videoRef} style="display:none" playsInline muted></video>
+                    <div className="row" style="padding:12px">
+                        <label>Preview frame
+                            (s){pxVideo.value ? ` (${pxPreviewFrame.value.toFixed(2)})` : ''}</label>
+                        <input type="range" min={0} max={pxVideo.value?.duration ?? 0} step={0.05}
+                               value={pxPreviewFrame.value}
+                               onInput={e => pxPreviewFrame.value = parseFloat((e.currentTarget as HTMLInputElement).value)}/>
+                    </div>
+                    <div className="workspace">
+
+                        <article className="canvas-card">
+                            <h3> Preview</h3>
+                            <canvas ref={previewCanvasRef} width={640} height={360}></canvas>
+                        </article>
+                        <article className="canvas-card">
+                            <h3>Processed output {pxStatus}</h3>
+                            <canvas ref={outputCanvasRef} width={640} height={360}></canvas>
+                        </article>
+                    </div>
+                </section>
+            </div>
+
         </div>
     );
 }

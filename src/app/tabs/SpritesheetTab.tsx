@@ -15,12 +15,12 @@ export function SpritesheetTab() {
             imgs.push(img);
         }
         ssImages.value = imgs;
-        ssStatus.value = `${imgs.length} imágenes cargadas`;
+        ssStatus.value = `${imgs.length} images loaded`;
     };
 
     const onBuild = async () => {
         if (!ssImages.value.length) {
-            alert('Importa imágenes');
+            alert('Import images');
             return;
         }
         const w = ssImages.value[0].width, h = ssImages.value[0].height;
@@ -49,7 +49,7 @@ export function SpritesheetTab() {
 
     const onExportGIF = async () => {
         if (!ssImages.value.length) {
-            alert('Importa imágenes');
+            alert('Import images');
             return;
         }
         // Export frames as an animated GIF using current FPS
@@ -59,10 +59,12 @@ export function SpritesheetTab() {
 
     return (
         <div class="content">
+
             <aside>
-                <div class="row"><label>Importar imágenes</label><input type="file" accept="image/*" multiple
-                                                                        onChange={onImport}/></div>
-                <div class="row"><label>Columnas</label><input type="number" placeholder="auto" onInput={e => {
+
+                <div class="row"><label>Import images</label><input type="file" accept="image/*" multiple
+                                                                    onChange={onImport}/></div>
+                <div class="row"><label>Columns</label><input type="number" placeholder="auto" onInput={e => {
                     const v = (e.currentTarget as HTMLInputElement).value;
                     ssCols.value = v ? parseInt(v) : undefined;
                 }}/></div>
@@ -76,14 +78,15 @@ export function SpritesheetTab() {
                                                                     onInput={e => ssFps.value = parseInt((e.currentTarget as HTMLInputElement).value || '12')}/>
                 </div>
                 <div class="row">
-                    <button onClick={onBuild}>Construir + Exportar</button>
+                    <button onClick={onBuild}>Build + Export</button>
                 </div>
                 <div class="row">
-                    <button onClick={onExportGIF}>Exportar GIF animado</button>
+                    <button onClick={onExportGIF}>Export Animated GIF</button>
                 </div>
                 <div class="row small">{ssStatus}</div>
             </aside>
             <main>
+                <h1>Work in Progress...</h1>
                 <canvas ref={prevRef} width={640} height={360}></canvas>
             </main>
         </div>
